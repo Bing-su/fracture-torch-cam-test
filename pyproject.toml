@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "fracture-torch-cam-test"
+version = "0.1.0"
+description = ""
+authors = ["dowon <ks2515@naver.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+torch = "^1.12.0"
+torchvision = "^0.13.0"
+timm = "^0.5.4"
+streamlit = "^1.10.0"
+torchcam = "^0.3.1"
+
+[tool.poetry.dev-dependencies]
+black = ">=22.3.0"
+isort = "*"
+mypy = "*"
+flake8 = "*"
+flake8-bugbear = "*"
+pre-commit = "*"
+ipywidgets = "^7.7.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
