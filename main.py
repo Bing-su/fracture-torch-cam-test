@@ -4,8 +4,6 @@ import torch
 from timm import create_model
 from torchcam.methods import (
     CAM,
-    ISCAM,
-    SSCAM,
     GradCAM,
     GradCAMpp,
     LayerCAM,
@@ -20,6 +18,8 @@ from torchvision.transforms.functional import normalize, to_pil_image, to_tensor
 MODEL_LIST = [
     "densenet121-0.900",
     "mobilenetv3-0.888",
+    "convnext_tiny-0.873",
+    "cspresnext50-0.894",
 ]
 CAM_METHODS = {
     "CAM": CAM,
@@ -27,8 +27,6 @@ CAM_METHODS = {
     "GradCAMpp": GradCAMpp,
     "SmoothGradCAMpp": SmoothGradCAMpp,
     "ScoreCAM": ScoreCAM,
-    "SSCAM": SSCAM,
-    "ISCAM": ISCAM,
     "XGradCAM": XGradCAM,
     "LayerCAM": LayerCAM,
 }
@@ -57,6 +55,10 @@ with st.spinner("Loading Model..."):
         model = create_model("densenet121", in_chans=1, num_classes=2)
     elif selected_model.startswith("mobilenetv3"):
         model = create_model("mobilenetv3_large_100", in_chans=1, num_classes=2)
+    elif selected_model.startswith("convnext_tiny"):
+        model = create_model("convnext_tiny", in_chans=1, num_classes=2)
+    elif selected_model.startswith("cspresnext50"):
+        model = create_model("cspresnext50", in_chans=1, num_classes=2)
     else:
         raise ValueError("Unknown model")
 
