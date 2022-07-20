@@ -16,10 +16,10 @@ from torchcam.utils import overlay_mask
 from torchvision.transforms.functional import normalize, to_pil_image, to_tensor
 
 MODEL_LIST = [
-    "densenet121-0.900",
-    "mobilenetv3-0.888",
-    "convnext_tiny-0.873",
     "cspresnext50-0.894",
+    "densenet121-0.900",
+    "densenet169-0.899",
+    "mobilenetv3-0.888",
 ]
 CAM_METHODS = {
     "CAM": CAM,
@@ -53,6 +53,8 @@ selected_model = st.sidebar.selectbox("Model", MODEL_LIST, index=0)
 with st.spinner("Loading Model..."):
     if selected_model.startswith("densenet121"):
         model = create_model("densenet121", in_chans=1, num_classes=2)
+    elif selected_model.startswith("densenet169"):
+        model = create_model("densenet169", in_chans=1, num_classes=2)
     elif selected_model.startswith("mobilenetv3"):
         model = create_model("mobilenetv3_large_100", in_chans=1, num_classes=2)
     elif selected_model.startswith("convnext_tiny"):
@@ -67,11 +69,12 @@ with st.spinner("Loading Model..."):
 
 # layer
 if selected_model.startswith("densenet121"):
-    target_layer = "features"
+    default_layer = "features"
 elif selected_model.startswith("mobilenetv3"):
-    target_layer = "blocks"
+    default_layer = "blocks"
 else:
-    target_layer = locate_candidate_layer(model, (1, 512, 512))
+    default_layer = locate_candidate_layer(model, (1, 512, 512))
+target_layer = st.sidebar.text_input("Target Layer", default_layer)
 
 # method
 cam_method = st.sidebar.selectbox("CAM Method", CAM_METHODS.keys(), index=6)
