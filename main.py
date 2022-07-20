@@ -67,15 +67,14 @@ with st.spinner("Loading Model..."):
 
 # layer
 if selected_model.startswith("densenet121"):
-    default_layer = "features"
+    target_layer = "features"
 elif selected_model.startswith("mobilenetv3"):
-    default_layer = "blocks"
+    target_layer = "blocks"
 else:
-    default_layer = locate_candidate_layer(model, (1, 512, 512))
-target_layer = st.sidebar.text_input("Target Layer", default_layer)
+    target_layer = locate_candidate_layer(model, (1, 512, 512))
 
 # method
-cam_method = st.sidebar.selectbox("CAM Method", CAM_METHODS.keys(), index=8)
+cam_method = st.sidebar.selectbox("CAM Method", CAM_METHODS.keys(), index=6)
 cam_class = CAM_METHODS[cam_method]
 cam_extractor = cam_class(
     model,
