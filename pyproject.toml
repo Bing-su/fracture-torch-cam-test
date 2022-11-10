@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fracture-torch-cam-test"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["dowon <ks2515@naver.com>"]
 license = "MIT"
