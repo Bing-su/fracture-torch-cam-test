@@ -43,7 +43,7 @@ cols[1].header("Overlayed Image")
 st.sidebar.title("Input Selection")
 uploaded_file = st.sidebar.file_uploader("Upload an image", type=["jpg", "png"])
 if uploaded_file is not None:
-    img = PIL.Image.open(uploaded_file)
+    img = PIL.Image.open(uploaded_file).convert("L")
     img = img.resize((512, 512), PIL.Image.Resampling.BICUBIC)
     cols[0].image(img, use_column_width=True)
 
@@ -102,6 +102,8 @@ if st.sidebar.button("Compute CAM"):
 
         out = model(inp.unsqueeze(0))
 
+    prob = torch.softmax(out, dim=1).squeeze()[1].item()
+
     act_maps = cam_extractor(1, out)
     act_map = act_maps[0] if len(act_maps) == 1 else cam_extractor.fuse_cams(act_maps)
 
@@ -109,3 +111,4 @@ if st.sidebar.button("Compute CAM"):
     result = overlay_mask(img.convert("RGB"), act_map_pil, alpha=alpha)
 
     cols[1].image(result, use_column_width=True)
+    cols[1].markdown(f"#### Probability: {prob:.3f}")
