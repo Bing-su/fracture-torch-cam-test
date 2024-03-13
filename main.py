@@ -81,9 +81,9 @@ cam_method = st.sidebar.selectbox("CAM Method", CAM_METHODS.keys(), index=6)
 cam_class = CAM_METHODS[cam_method]
 cam_extractor = cam_class(
     model,
-    target_layer=[s.strip() for s in target_layer.split("+")]
-    if len(target_layer) > 0
-    else None,
+    target_layer=(
+        [s.strip() for s in target_layer.split("+")] if len(target_layer) > 0 else None
+    ),
 )
 
 # alpha
